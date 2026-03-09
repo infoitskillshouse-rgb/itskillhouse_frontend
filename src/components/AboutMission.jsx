@@ -1,101 +1,97 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import "../style/MissionText.css";
 import Button from "./Button";
 import { FaArrowRight } from "react-icons/fa";
 
 const AboutMission = () => {
+
   const sectionRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "center center"],
   });
 
-  // Detect mobile device
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
-  }, []);
+  const headingX = useTransform(scrollYProgress, [0, 1], [-80, 0]);
+  const paragraphY = useTransform(scrollYProgress, [0, 1], [60, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  // Framer Motion transforms (desktop only)
-  const headingX = useTransform(scrollYProgress, [0, 1], [-60, 0]);
-  const headingOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const paragraphX = useTransform(scrollYProgress, [0, 1], [80, 0]);
-  const paragraphOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const buttonY = useTransform(scrollYProgress, [0, 1], [20, 0]);
-  const buttonOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  const paragraph = `With over 5+ years of hands-on experience, we're not just building products — we're shaping experiences that redefine what's possible. From startups to scale-ups, we've partnered with brands across industries to craft digital solutions that are fast, reliable, and deeply human-centered. Our mission is simple: to build with purpose, challenge the ordinary, and deliver impact. Whether it's design, development, or strategy — we don’t just follow trends, we set them. Because in a world full of noise, we believe in creating work that speaks for itself.`;
+  const paragraph = `With over 5+ years of hands-on experience, we're not just building
+  products — we're shaping digital experiences that redefine what’s
+  possible. From startups to scale-ups, we've partnered with brands to
+  craft solutions that are fast, reliable and deeply human-centered.`;
 
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-surface lg:py-[14vh] lg:px-[6vw] flex flex-col gap-12 md:gap-20 lg:flex-row lg:items-start max-sm:px-[5vw]  max-sm:pb-[8vh] max-sm:gap-7"
+      className="relative w-full py-28 px-6 lg:px-[8vw] bg-gradient-to-b from-white via-slate-50 to-blue-50 overflow-hidden"
     >
-      {/* Left: Section Title */}
-      <motion.div
-        className="flex items-center gap-3"
-        {...(isMobile
-          ? {
-              initial: { opacity: 0, scale: 0.9 },
-              animate: { opacity: 1, scale: 1 },
-              transition: { duration: 0.9, delay: 0.2, ease: "easeOut" },
-            }
-          : { style: { x: headingX, opacity: headingOpacity } })}
-      >
-        <div className="w-1 h-6 bg-text" />
-        <h2 className="text-[clamp(18px,2vw,28px)]  font-bold text-text tracking-wide uppercase max-sm:text-[6vw]">
-          mission
-        </h2>
-      </motion.div>
 
-      {/* Right: Content */}
-      <div className="flex flex-col gap-2 max-w-4xl">
-        <motion.p
-          className=" text-dark text-[clamp(15px,1.8vw,22px)] leading-[1.7] will-change-transform max-sm:text-[4.5vw] font-normal  "
-          {...(isMobile
-            ? {
-                initial: { opacity: 0, y: 40 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 1, delay: 0.4, ease: "easeOut" },
-              }
-            : { style: { x: paragraphX, opacity: paragraphOpacity } })}
-        >
-          {paragraph}
-        </motion.p>
+      {/* Background glow */}
+      <div className="absolute -top-20 left-1/4 w-96 h-96 bg-blue-300/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-300/20 rounded-full blur-3xl" />
 
-        <motion.p
-          className=" text-dark font-medium text-[clamp(15px,1.8vw,22px)] leading-[1.7] will-change-transform max-sm:text-[4.5vw]    "
-          {...(isMobile
-            ? {
-                initial: { opacity: 0, y: 30 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 0.9, delay: 0.6, ease: "easeOut" },
-              }
-            : { style: { x: paragraphX, opacity: paragraphOpacity } })}
-        >
-          We're not here to take part. We're here to lead, innovate, and leave a mark.
-        </motion.p>
+      <div className="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
+
+        {/* LEFT SIDE */}
 
         <motion.div
-          className="pt-2"
-          {...(isMobile
-            ? {
-                initial: { opacity: 0, y: 30 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 0.5, delay: 0.8, ease: "easeOut" },
-              }
-            : { style: { y: buttonY, opacity: buttonOpacity } })}
+          style={{ x: headingX, opacity }}
+          className="flex flex-col gap-6"
         >
-          <Button
-            size="lg"
-            iconRight={<FaArrowRight />}
-            className="w-fit text-[2.5vw] max-sm:text-[5.5vw]  max-sm:mb-[0]"
-          >
-            discover more
-          </Button>
+
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"/>
+            <span className="uppercase tracking-widest text-sm text-slate-500">
+              our mission
+            </span>
+          </div>
+
+          <h2 className="text-5xl md:text-6xl font-semibold leading-tight">
+
+            Building products that{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              inspire impact
+            </span>
+
+          </h2>
+
         </motion.div>
+
+        {/* RIGHT SIDE */}
+
+        <motion.div
+          style={{ y: paragraphY, opacity }}
+          className="bg-white/70 backdrop-blur-xl p-10 rounded-3xl border border-white/40 shadow-xl flex flex-col gap-6"
+        >
+
+          <p className="text-slate-700 text-lg leading-relaxed">
+            {paragraph}
+          </p>
+
+          <p className="text-slate-800 font-medium text-lg leading-relaxed">
+            Our mission is simple: build with purpose, challenge the ordinary,
+            and deliver experiences that truly matter.
+          </p>
+
+          <p className="text-slate-700 text-lg">
+            We don't just follow trends — we create them.
+          </p>
+
+          <div>
+            <Button
+              size="lg"
+              iconRight={<FaArrowRight />}
+              className="w-fit"
+            >
+              Discover More
+            </Button>
+          </div>
+
+        </motion.div>
+
       </div>
+
     </section>
   );
 };

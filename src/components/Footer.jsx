@@ -75,7 +75,7 @@ export default function Footer() {
             custom={1}
             className="text-center space-y-3"
           >
-            <p className="text-xl font-medium">contact@yourbrand.com</p>
+            <p className="text-xl font-medium">infoitskillshouse@gmail.com</p>
             <p className="text-lg text-light/70">+91 9592838557</p>
 
             <div className="flex justify-center gap-5 pt-4">
