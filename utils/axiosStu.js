@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/api", // ✅ Correct backend port
+  baseURL: "https://itskillhouse-backend.onrender.com/api", // ✅ Correct backend port
 });
 
 // axiosInstance.js
