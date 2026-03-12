@@ -92,7 +92,8 @@ const AnimatedPageWrapper = ({ children }) => (
 const Layout = () => {
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const isAdminRoute = location.pathname.startsWith("/admin"); // 🔥 Admin check
+  const isAdminRoute = location.pathname.startsWith("/admin"); 
+  const isStudentResult = location.pathname === "/student-result";
 
   const [isHeaderOpen, setIsHeaderOpen] = useState(false);
 
@@ -108,7 +109,7 @@ const Layout = () => {
       )}
 
       {/* Newsletter hide on admin */}
-      {!isAdminRoute && <NewsletterPopup />}
+      {!isAdminRoute && !isStudentResult && <NewsletterPopup />}
 
       <AnimatePresence mode="wait">
         <motion.div key={location.pathname}>
