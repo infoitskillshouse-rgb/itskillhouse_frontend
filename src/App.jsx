@@ -67,6 +67,12 @@ import AddTestimonial from "./pages/testimonials/AddTestimonial.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 
+// batches
+import CreateBatch from "./pages/batches/CreateBatch.jsx";
+import BatchesList from "./pages/batches/BatchesList.jsx";
+import EditBatch from "./pages/batches/EditBatch.jsx";
+import BatchDetails from "./pages/batches/BatchDetails.jsx";
+
 
 // admin routes
 import ForgotPassword from "./pages/admin/ForgotPassword.jsx";
@@ -167,6 +173,13 @@ const Layout = () => {
             <Route path="profile" element={<AdminProfile />} />
             <Route path="create-admin" element={<CreateAdmin />} />
             <Route path="update-profile" element={<UpdateProfile />} />
+
+
+            {/* batches */}
+<Route path="batches" element={<BatchesList />} />
+<Route path="batches/create" element={<CreateBatch />} />
+<Route path="batches/edit/:id" element={<EditBatch />} />
+<Route path="batches/:id" element={<BatchDetails />} />
 
             </Route>
 

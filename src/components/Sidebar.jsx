@@ -14,6 +14,7 @@ import {
   PlusCircle,
   Mail,
   BarChart2,
+  Layers 
 } from "lucide-react";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
@@ -25,6 +26,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const [studentOpen, setStudentOpen] = useState(false);
   const [testimonialsOpen, setTestimonialsOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [batchOpen, setBatchOpen] = useState(false);
 
   const isActive = (path) =>
     pathname === path
@@ -254,7 +256,45 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               </Link>
             </div>
           </div>
+{/* Batches */}
+<div>
+  <button
+    onClick={() => setBatchOpen(!batchOpen)}
+    className="flex justify-between items-center w-full p-2 rounded-md hover:bg-blue-50 transition text-gray-700"
+  >
+    <span className="flex items-center gap-2">
+      <Layers size={18} />
+      Batches
+    </span>
+    {batchOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+  </button>
 
+  <div
+    className={`pl-8 mt-1 space-y-1 overflow-hidden transition-all duration-300 ${
+      batchOpen ? "max-h-40" : "max-h-0"
+    }`}
+  >
+    <Link
+      to="/admin/batches"
+      onClick={handleLinkClick}
+      className={`block p-1 rounded hover:text-blue-700 ${isActive(
+        "/admin/batches"
+      )}`}
+    >
+      All Batches
+    </Link>
+
+    <Link
+      to="/admin/batches/create"
+      onClick={handleLinkClick}
+      className={`block p-1 rounded hover:text-blue-700 ${isActive(
+        "/admin/batches/create"
+      )}`}
+    >
+      Create Batch
+    </Link>
+  </div>
+</div>
           {/* Admin Section */}
           <div>
             <button
