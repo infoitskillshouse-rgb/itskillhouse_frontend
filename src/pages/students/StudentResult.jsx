@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { getStudentById } from "../../services/studentApi";
+import CoursesSection from "./CoursesSection";
+import WhyChooseUs from "./WhyChooseUs";
+import CertifiedStudentsSlider from "./CertifiedStudentsSlider";
 
 const StudentResult = () => {
   const [studentId, setStudentId] = useState("");
@@ -41,6 +44,7 @@ const StudentResult = () => {
   }, [student]);
 
   return (
+    <div>
     <div className="max-w-[1100px] mx-auto mt-6 sm:mt-10 mb-10 sm:mb-16 p-4 sm:p-8 bg-white rounded-2xl sm:rounded-3xl shadow-2xl">
       {/* Header */}
       <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-blue-800 bg-clip-text text-transparent">
@@ -136,7 +140,13 @@ const StudentResult = () => {
           </div>
         </div>
       )}
+      
     </div>
+    <CoursesSection />
+    <WhyChooseUs />
+    <CertifiedStudentsSlider />
+    </div>
+    
   );
 };
 
