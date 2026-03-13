@@ -14,7 +14,6 @@ const fetchSubscribers = async () => {
     const subs = res?.data?.data || [];
     
     setSubscribers(subs);
-    console.log(subs)
   } catch (error) {
     console.error(error);
     toast.error("Failed to fetch subscribers.");

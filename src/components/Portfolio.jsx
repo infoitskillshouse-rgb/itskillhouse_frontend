@@ -12,8 +12,6 @@ export default function Portfolio() {
     const fetchPortfolio = async () => {
       try {
         const data = await getPortfolios();
-        // IMPORTANT: data must be array
-        console.log("API RESPONSE:", data);
         setProjects(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Portfolio fetch error:", error);

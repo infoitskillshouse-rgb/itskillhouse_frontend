@@ -15,8 +15,6 @@ try{
 
 const data = await getProfile();
 
-console.log(data); // check structure
-
 setAdmin(data.admin); // ✅ FIX
 
 }catch(err){

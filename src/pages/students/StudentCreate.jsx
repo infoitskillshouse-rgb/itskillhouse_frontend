@@ -34,8 +34,6 @@ export default function AdminCreate() {
         alert("Only image allowed");
         return;
       }
-
-      console.log("Selected file:", files[0]);
       setFormData((prev) => ({
         ...prev,
         image: files[0],
@@ -67,7 +65,6 @@ export default function AdminCreate() {
       }
     }
 
-    console.log("Updated form data:", updatedData);
     setFormData(updatedData);
   };
 
@@ -91,7 +88,6 @@ export default function AdminCreate() {
 
     for (let field of requiredFields) {
       if (!formData[field]) {
-        console.warn(`${field} is required`);
         return `${field} is required`;
       }
     }
@@ -101,7 +97,6 @@ export default function AdminCreate() {
   // ------------------ HANDLE SUBMIT ------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submit clicked");
 
     const errorMsg = validate();
     if (errorMsg) {
@@ -119,21 +114,16 @@ export default function AdminCreate() {
       const form = new FormData();
       Object.keys(formData).forEach((key) => {
         if (key === "image") {
-          console.log("Appending image to FormData:", formData.image);
           form.append("image", formData.image);
         } else {
           form.append(key, formData[key]);
         }
       });
-
-      console.log("Final FormData keys/values:");
       for (let pair of form.entries()) {
-        console.log(pair[0], ":", pair[1]);
       }
 
       // ------------------ SEND TO BACKEND ------------------
       const res = await createStudent(form);
-      console.log("Server response:", res.data);
 
       setSuccess("Student created successfully");
       setFormData(initialState);

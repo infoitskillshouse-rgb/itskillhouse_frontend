@@ -7,8 +7,6 @@ const CommentSection = ({ comments = [] }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
-      // API call here
-      console.log("New comment:", text);
       setText("");
     }
   };

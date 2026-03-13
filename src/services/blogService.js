@@ -9,11 +9,6 @@
   export const deleteBlog = async (blogId, imagePath) => {
     try {
       const res = await axiosInstance.delete(`/blogs/${blogId}`);
-      console.log(res.data);
-
-      // Optional: delete image file separately (if needed)
-      // const res2 = await axios.delete(`/api/delete-image?path=${imagePath}`);
-
       alert("Deleted successfully!");
     } catch (err) {
       console.error(err);

@@ -3,6 +3,7 @@ import { getStudentById } from "../../services/studentApi";
 import CoursesSection from "./CoursesSection";
 import WhyChooseUs from "./WhyChooseUs";
 import CertifiedStudentsSlider from "./CertifiedStudentsSlider";
+import UpcomingBatches from "../batches/UpcomingBatches";
 
 const StudentResult = () => {
   const [studentId, setStudentId] = useState("");
@@ -145,6 +146,7 @@ const StudentResult = () => {
     <CoursesSection />
     <WhyChooseUs />
     <CertifiedStudentsSlider />
+    <UpcomingBatches/>
     </div>
     
   );
