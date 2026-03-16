@@ -4,6 +4,8 @@ import CoursesSection from "./CoursesSection";
 import WhyChooseUs from "./WhyChooseUs";
 import CertifiedStudentsSlider from "./CertifiedStudentsSlider";
 import UpcomingBatches from "../batches/UpcomingBatches";
+import { FaUserGraduate } from "react-icons/fa";
+
 
 const StudentResult = () => {
   const [studentId, setStudentId] = useState("");
@@ -46,30 +48,37 @@ const StudentResult = () => {
 
   return (
     <div className="">
-<div className="mx-auto   sm:p-10  bg-black text-white">
+<div className="mx-auto  sm:p-10  bg-black text-white">
 
   {/* Header */}
-  <h1 className="text-center text-3xl sm:text-4xl font-semibold mb-8 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
-    Student Result Portal
-  </h1>
+<h1 className="flex  items-center justify-center gap-3 pt-[50px] text-3xl sm:text-4xl font-semibold mb-8 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+
+  <FaUserGraduate className="text-blue-400 text-4xl" />
+
+  Student Result Portal
+
+</h1>
 
   {/* Search */}
-  <div className="flex flex-col sm:flex-row gap-4  backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-3">
-    <input
-      type="text"
-      placeholder="Enter Student ID (e.g. 2026-DM-01)"
-      value={studentId}
-      onChange={(e) => setStudentId(e.target.value)}
-      className="flex-1 p-3 rounded-xl bg-transparent text-white placeholder-gray-400 outline-none"
-    />
+<div className="w-[90%] mx-auto flex flex-col sm:flex-row gap-4 backdrop-blur-md bg-white/5 border border-white rounded-2xl p-3">
 
-    <button
-      onClick={fetchStudent}
-      className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold shadow-lg hover:scale-105 transition"
-    >
-      {loading ? "Searching..." : "Search"}
-    </button>
-  </div>
+  <input
+    type="text"
+    placeholder="Enter Student ID (e.g. 2026-DM-01)"
+    value={studentId}
+    onChange={(e) => setStudentId(e.target.value)}
+    className="flex-1 p-3 bg-transparent text-white placeholder-gray-400 outline-none 
+    border-b border-white sm:border-none"
+  />
+
+  <button
+    onClick={fetchStudent}
+    className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold shadow-lg hover:scale-105 transition"
+  >
+    {loading ? "Searching..." : "Search"}
+  </button>
+
+</div>
 
   {/* Error */}
   {error && (

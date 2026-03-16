@@ -2,12 +2,32 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  FaTwitter,
+  FaGithub,
   FaInstagram,
   FaLinkedinIn,
   FaFacebookF,
 } from "react-icons/fa";
 
+
+
+const socials = [
+  {
+    Icon: FaInstagram,
+    link: "https://www.instagram.com/itskillshouse",
+  },
+  {
+    Icon: FaFacebookF,
+    link: "https://www.facebook.com/share/1F62GLGPbX/?mibextid=wwXIfr",
+  },
+  {
+    Icon: FaLinkedinIn,
+    link: "https://www.linkedin.com/company/it-skills-house",
+  },
+  {
+    Icon: FaGithub,
+    link: "https://github.com/IT-SKILLS-HOUSE01",
+  },
+];
 const links = [
   { name: "About", path: "/about" },
   { name: "Expertise", path: "/expertise" },
@@ -15,13 +35,6 @@ const links = [
   { name: "Blog", path: "/blog" },
   { name: "Contact", path: "/contact" },
   { name: "Student Verification", path: "/student-result" },
-];
-
-const socials = [
-  { Icon: FaFacebookF },
-  { Icon: FaInstagram },
-  { Icon: FaLinkedinIn },
-  { Icon: FaTwitter },
 ];
 
 export default function Footer() {
@@ -79,15 +92,18 @@ export default function Footer() {
             <p className="text-lg text-light/70">+91 9592838557</p>
 
             <div className="flex justify-center gap-5 pt-4">
-              {socials.map(({ Icon }, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.1 }}
-                  className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center"
-                >
-                  <Icon />
-                </motion.div>
-              ))}
+{socials.map(({ Icon, link }, i) => (
+  <motion.a
+    key={i}
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ scale: 1.1 }}
+    className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center"
+  >
+    <Icon />
+  </motion.a>
+))}
             </div>
           </motion.div>
 
