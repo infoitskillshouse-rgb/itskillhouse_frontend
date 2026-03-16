@@ -54,7 +54,7 @@ const StudentResult = () => {
   </h1>
 
   {/* Search */}
-  <div className="flex flex-col sm:flex-row gap-4 mb-8 backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-3">
+  <div className="flex flex-col sm:flex-row gap-4  backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-3">
     <input
       type="text"
       placeholder="Enter Student ID (e.g. 2026-DM-01)"
