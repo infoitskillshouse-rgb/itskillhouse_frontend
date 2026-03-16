@@ -72,6 +72,7 @@ import CreateBatch from "./pages/batches/CreateBatch.jsx";
 import BatchesList from "./pages/batches/BatchesList.jsx";
 import EditBatch from "./pages/batches/EditBatch.jsx";
 import BatchDetails from "./pages/batches/BatchDetails.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 
 // admin routes
@@ -119,8 +120,9 @@ const Layout = () => {
 
       <AnimatePresence mode="wait">
         <motion.div key={location.pathname}>
+           <ScrollToTop />
           <Routes location={location}>
-
+ 
             {/* Public Routes */}
             <Route path="/" element={<AnimatedPageWrapper><Home /></AnimatedPageWrapper>} />
             <Route path="/about" element={<AnimatedPageWrapper><About /></AnimatedPageWrapper>} />

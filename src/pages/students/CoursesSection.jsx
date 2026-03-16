@@ -58,7 +58,7 @@ function CoursesSection() {
   ];
 
   return (
-    <section className="mt-32 py-24 px-6 bg-black text-white relative overflow-hidden">
+    <section className=" py-24 px-6 bg-black text-white relative overflow-hidden">
 
       {/* glow background */}
       <div className="absolute w-96 h-96 bg-blue-600 opacity-20 blur-[120px] top-0 left-0"></div>
