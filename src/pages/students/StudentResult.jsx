@@ -46,10 +46,10 @@ const StudentResult = () => {
 
   return (
     <div className="">
-<div className="mx-auto   sm:p-10 bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white">
+<div className="mx-auto   sm:p-10  bg-black text-white">
 
   {/* Header */}
-  <h1 className="text-center text-3xl sm:text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+  <h1 className="text-center text-3xl sm:text-4xl font-semibold mb-8 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
     Student Result Portal
   </h1>
 
