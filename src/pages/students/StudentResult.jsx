@@ -119,10 +119,10 @@ const StudentResult = () => {
           Student Details
         </h3>
 
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2 max-h-[calc(100vh-350px)] overflow-y-auto pr-2"
-        >
+<div
+  ref={gridRef}
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2 pr-2"
+>
 
           {[
             ["Father Name", student.fatherName],
