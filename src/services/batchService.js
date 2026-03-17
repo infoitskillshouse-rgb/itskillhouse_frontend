@@ -3,7 +3,7 @@ import axios from '../../utils/axiosInstance';
 
 // Get all batches (Public / Admin)
 export const getAllBatches = async () => {
-  const res = await axios.get('/batches/all');
+  const res = await axios.get('/batches');
   return res.data.data;
 };
 

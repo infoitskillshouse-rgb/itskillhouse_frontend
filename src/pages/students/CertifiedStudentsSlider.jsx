@@ -1,39 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { getAllStudents } from "../../services/studentApi";
+import { FaCheckCircle } from "react-icons/fa";
 
 import "swiper/css";
 
 function CertifiedStudentsSlider() {
 
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const data = [
-      {
-        name: "Rahul Sharma",
-        course: "Web Development",
-        image: "/students/student1.jpg"
-      },
-      {
-        name: "Priya Verma",
-        course: "Digital Marketing",
-        image: "/students/student2.jpg"
-      },
-      {
-        name: "Aman Singh",
-        course: "Graphic Designing",
-        image: "/students/student3.jpg"
-      },
-      {
-        name: "Karan Patel",
-        course: "Advanced Excel",
-        image: "/students/student4.jpg"
-      }
-    ];
+    const fetchStudents = async () => {
+      try {
+        const data = await getAllStudents();
+        setStudents(data.data.students || data);
 
-    setStudents(data);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudents();
   }, []);
+
+  if (loading) {
+    return (
+      <p className="text-center py-10 text-gray-400">
+        Loading students...
+      </p>
+    );
+  }
 
   return (
     <section className="py-28 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
@@ -51,7 +51,6 @@ function CertifiedStudentsSlider() {
         <div className="w-24 h-1 bg-blue-500 mx-auto mt-4 rounded-full"></div>
       </div>
 
-      {/* Slider */}
       <div className="max-w-6xl mx-auto px-6">
 
         <Swiper
@@ -69,35 +68,39 @@ function CertifiedStudentsSlider() {
           }}
         >
 
-          {students.map((student, index) => (
+          {students.map((student) => (
 
-            <SwiperSlide key={index}>
+            <SwiperSlide key={student._id}>
 
-              {/* Glass Card */}
               <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg hover:scale-105 transition duration-300">
 
                 <div className="flex items-center gap-4">
 
-                  {/* Image Left */}
+                  {/* Image */}
                   <img
-                    src={student.image}
+                    src={
+                      student.image
+                        ? student.image
+                        : "/default-user.png"
+                    }
                     alt={student.name}
                     className="w-20 h-20 rounded-xl object-cover border border-white/30"
                   />
 
-                  {/* Name Right */}
+                  {/* Info */}
                   <div>
 
                     <h3 className="text-xl font-semibold text-white">
                       {student.name}
                     </h3>
 
-                    <p className="text-gray-300 text-sm mt-1">
-                      Course Completed
-                    </p>
+<p className="flex items-center gap-2 text-sm mt-1 text-green-400 font-medium">
+  <FaCheckCircle className="text-green-500" />
+  Course Completed
+</p>
 
                     <p className="text-blue-400 text-sm font-medium">
-                      {student.course}
+                      {student.courseName}
                     </p>
 
                   </div>

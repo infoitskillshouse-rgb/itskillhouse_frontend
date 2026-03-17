@@ -23,7 +23,6 @@ const EditBatch = () => {
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Fetch existing batch
   const fetchBatch = async () => {
     try {
       const data = await getBatchById(id);
@@ -40,7 +39,6 @@ const EditBatch = () => {
         fee: data.fee || "",
         discount: data.discount || 0
       });
-
     } catch (error) {
       console.error("Error fetching batch:", error);
     } finally {
@@ -73,117 +71,171 @@ const EditBatch = () => {
       setTimeout(() => {
         navigate("/admin/batches");
       }, 1500);
-
     } catch (error) {
-      setMessage(
-        error?.response?.data?.message || "Update failed"
-      );
+      setMessage(error?.response?.data?.message || "Update failed");
     } finally {
       setUpdating(false);
     }
   };
 
-  if (loading) return <p>Loading batch...</p>;
+  if (loading)
+    return (
+      <p className="text-center py-10 text-gray-500">
+        Loading batch...
+      </p>
+    );
 
   return (
-    <div className="edit-batch-container">
-      <h2>Edit Batch</h2>
+    <div className="min-h-screen bg-gray-100 p-6">
 
-      {message && <p>{message}</p>}
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8">
 
-      <form onSubmit={handleSubmit}>
+        {/* Heading */}
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Edit Batch ✏️
+        </h2>
 
-        <input
-          type="text"
-          name="courseName"
-          placeholder="Course Name"
-          value={formData.courseName}
-          onChange={handleChange}
-          required
-        />
+        {/* Message */}
+        {message && (
+          <p className="mb-4 text-center text-green-600 font-medium">
+            {message}
+          </p>
+        )}
 
-        <input
-          type="text"
-          name="courseSlug"
-          placeholder="Course Slug"
-          value={formData.courseSlug}
-          onChange={handleChange}
-          required
-        />
+        <form onSubmit={handleSubmit} className="space-y-5">
 
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate}
-          onChange={handleChange}
-          required
-        />
+          {/* Grid */}
+          <div className="grid md:grid-cols-2 gap-5">
 
-        <input
-          type="text"
-          name="duration"
-          placeholder="Duration"
-          value={formData.duration}
-          onChange={handleChange}
-          required
-        />
+            <input
+              type="text"
+              name="courseName"
+              placeholder="Course Name"
+              value={formData.courseName}
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          type="text"
-          name="timing"
-          placeholder="Timing"
-          value={formData.timing}
-          onChange={handleChange}
-        />
+            <input
+              type="text"
+              name="courseSlug"
+              placeholder="Course Slug"
+              value={formData.courseSlug}
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <select
-          name="mode"
-          value={formData.mode}
-          onChange={handleChange}
-        >
-          <option value="Offline">Offline</option>
-          <option value="Online">Online</option>
-          <option value="Hybrid">Hybrid</option>
-        </select>
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          type="number"
-          name="seatsTotal"
-          placeholder="Total Seats"
-          value={formData.seatsTotal}
-          onChange={handleChange}
-        />
+            <input
+              type="text"
+              name="duration"
+              placeholder="Duration"
+              value={formData.duration}
+              onChange={handleChange}
+              className="input"
+              required
+            />
 
-        <input
-          type="number"
-          name="seatsLeft"
-          placeholder="Seats Left"
-          value={formData.seatsLeft}
-          onChange={handleChange}
-        />
+            <input
+              type="text"
+              name="timing"
+              placeholder="Timing"
+              value={formData.timing}
+              onChange={handleChange}
+              className="input"
+            />
 
-        <input
-          type="number"
-          name="fee"
-          placeholder="Fee"
-          value={formData.fee}
-          onChange={handleChange}
-          required
-        />
+            <select
+              name="mode"
+              value={formData.mode}
+              onChange={handleChange}
+              className="input"
+            >
+              <option value="Offline">Offline</option>
+              <option value="Online">Online</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
 
-        <input
-          type="number"
-          name="discount"
-          placeholder="Discount %"
-          value={formData.discount}
-          onChange={handleChange}
-        />
+            <input
+              type="number"
+              name="seatsTotal"
+              placeholder="Total Seats"
+              value={formData.seatsTotal}
+              onChange={handleChange}
+              className="input"
+            />
 
-        <button type="submit" disabled={updating}>
-          {updating ? "Updating..." : "Update Batch"}
-        </button>
+            <input
+              type="number"
+              name="seatsLeft"
+              placeholder="Seats Left"
+              value={formData.seatsLeft}
+              onChange={handleChange}
+              className="input"
+            />
 
-      </form>
+            <input
+              type="number"
+              name="fee"
+              placeholder="Fee"
+              value={formData.fee}
+              onChange={handleChange}
+              className="input"
+              required
+            />
+
+            <input
+              type="number"
+              name="discount"
+              placeholder="Discount %"
+              value={formData.discount}
+              onChange={handleChange}
+              className="input"
+            />
+
+          </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            disabled={updating}
+            className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
+          >
+            {updating ? "Updating..." : "Update Batch"}
+          </button>
+
+        </form>
+      </div>
+
+      {/* Reusable Input Style */}
+      <style>
+        {`
+          .input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: 0.2s;
+          }
+
+          .input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+          }
+        `}
+      </style>
+
     </div>
   );
 };
