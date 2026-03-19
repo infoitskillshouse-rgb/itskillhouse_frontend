@@ -9,24 +9,29 @@ export default function EditPortfolio() {
 
   const [formData, setFormData] = useState({
     title: "",
-    image: "",
     category: "",
   });
-  const [loading, setLoading] = useState(true); // Loading while fetching data
-  const [updating, setUpdating] = useState(false); // Loading while updating
+
+  const [image, setImage] = useState(null); // 👈 new file
+  const [preview, setPreview] = useState(""); // 👈 preview (new/old)
+
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const res = await getPortfolioById(id); 
-        // Assuming API response structure: { data: { portfolio } }
-        const portfolio = res.data || {}; 
+        const res = await getPortfolioById(id);
+        const portfolio = res.data || {};
+
         setFormData({
           title: portfolio.title || "",
-          image: portfolio.image || "",
           category: portfolio.category || "",
-          description: portfolio.description || "",
         });
+
+        // 👇 old image preview
+        setPreview(portfolio.image || "");
+
       } catch (err) {
         console.error(err);
         toast.error("Failed to load portfolio");
@@ -38,17 +43,40 @@ export default function EditPortfolio() {
     fetchPortfolio();
   }, [id]);
 
+  // text change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // file change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+
+    if (file) {
+      setPreview(URL.createObjectURL(file)); // 👈 new preview
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdating(true);
+
     try {
-      await updatePortfolio(id, formData);
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("category", formData.category);
+
+      // 👇 only if new image selected
+      if (image) {
+        data.append("image", image);
+      }
+
+      await updatePortfolio(id, data);
+
       toast.success("Portfolio updated successfully");
       navigate("/admin/portfolio");
+
     } catch (err) {
       console.error(err);
       toast.error("Update failed. Please try again.");
@@ -70,6 +98,7 @@ export default function EditPortfolio() {
       <h2 className="text-2xl font-bold mb-6">Edit Portfolio</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Title */}
         <input
           type="text"
           name="title"
@@ -81,17 +110,25 @@ export default function EditPortfolio() {
           disabled={updating}
         />
 
+        {/* File Upload */}
         <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={handleChange}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
           className="w-full border p-3 rounded"
-          required
           disabled={updating}
         />
 
+        {/* Preview */}
+        {preview && (
+          <img
+            src={preview}
+            alt="Preview"
+            className="w-full h-48 object-cover rounded border"
+          />
+        )}
+
+        {/* Category */}
         <input
           type="text"
           name="category"
@@ -103,6 +140,7 @@ export default function EditPortfolio() {
           disabled={updating}
         />
 
+        {/* Submit */}
         <button
           type="submit"
           className={`bg-blue-600 text-white px-6 py-2 rounded ${

@@ -1,50 +1,78 @@
 import React, { memo } from "react";
 import { motion } from "framer-motion";
+import why1 from "../assets/whyCHooseUs/why1.avif"
+import why2 from "../assets/whyCHooseUs/why2.avif"
+import why3 from "../assets/whyCHooseUs/why3.avif"
+import why4 from "../assets/whyCHooseUs/why4.avif"
+import why5 from "../assets/whyCHooseUs/why5.avif"
+import why6 from "../assets/whyCHooseUs/why6.avif"
 
 /* ================= DATA ================= */
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 60,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 const whyChooseMeCards = [
   {
     id: 1,
     title: "Fast Performance",
     tag: "Speed",
-    desc: "Lightning fast websites with optimized code, lazy loading and performance-first architecture.",
-    url: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop",
+    desc: "Lightning fast websites...",
+    url: why1,
   },
   {
     id: 2,
     title: "Modern UI / UX",
     tag: "Design",
-    desc: "Clean and modern interfaces designed to increase engagement and improve user experience.",
-    url: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1400&auto=format&fit=crop",
+    desc: "Clean and modern interfaces...",
+    url: why2,
   },
   {
     id: 3,
     title: "SEO Optimized",
     tag: "SEO",
-    desc: "SEO-friendly structure that helps your website rank higher on Google search results.",
-    url: "https://images.unsplash.com/photo-1562577309-2592ab84b1bc?q=80&w=1400&auto=format&fit=crop",
+    desc: "SEO-friendly structure...",
+    url: why3,
   },
   {
     id: 4,
     title: "Secure Code",
     tag: "Security",
-    desc: "Best security practices, protected APIs and scalable architecture for long-term growth.",
-    url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1400&auto=format&fit=crop",
+    desc: "Best security practices...",
+    url: why4,
   },
   {
     id: 5,
     title: "Client Satisfaction",
     tag: "Trust",
-    desc: "Transparent communication, reliable delivery and complete client satisfaction.",
-    url: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1400&auto=format&fit=crop",
+    desc: "Transparent communication...",
+    url: why5,
   },
   {
     id: 6,
     title: "Responsive Design",
     tag: "Mobile",
-    desc: "Fully responsive websites that look perfect on mobile, tablet and desktop devices.",
-    url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400&auto=format&fit=crop",
+    desc: "Fully responsive websites...",
+    url: why6,
   }
 ];
 
@@ -53,31 +81,47 @@ const whyChooseMeCards = [
 const Card = memo(({ card }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.05, y: -8 }}
-      transition={{ type: "spring", stiffness: 150 }}
-      className="group relative h-[320px] rounded-3xl overflow-hidden border border-white/10 shadow-xl"
+          variants={cardVariants}   
+      whileHover={{ y: -10 }}
+      transition={{ type: "spring", stiffness: 120 }}
+      className="group relative h-[250px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
     >
       {/* IMAGE */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
         style={{ backgroundImage: `url(${card.url})` }}
       />
 
-      {/* OVERLAY */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+      {/* DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/60 group-hover:bg-black/70 transition duration-500" />
 
-      {/* CONTENT */}
-      <div className="relative z-10 p-6 h-full flex flex-col justify-end gap-3">
-        
-        <span className="inline-block w-fit px-3 py-1 text-xs rounded-full bg-text/80 backdrop-blur-md">
+      {/* GLOW */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 blur-xl transition duration-500" />
+
+      {/* TAG */}
+      <div className="absolute top-4 left-4 z-10">
+        <span className="px-3 py-1 text-xs rounded-full bg-white/10 backdrop-blur-md border border-white/20">
           {card.tag}
         </span>
+      </div>
 
-        <h3 className="text-2xl font-bold">{card.title}</h3>
+      {/* CONTENT */}
+      <div className="relative z-10 h-full flex flex-col justify-end p-6">
 
-        <p className="text-white/80 text-sm leading-relaxed">
+        <motion.h3
+          className="text-2xl font-bold mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {card.title}
+        </motion.h3>
+
+        <motion.p
+          className="text-white/80 text-sm leading-relaxed translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
+        >
           {card.desc}
-        </p>
+        </motion.p>
 
       </div>
     </motion.div>
@@ -88,50 +132,38 @@ const Card = memo(({ card }) => {
 
 const WhyChooseUsModern = () => {
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7 }
-    }
-  };
-
   return (
-    <section className="relative py-24 px-6 md:px-12 bg-gradient-to-b from-black via-zinc-900 to-black text-white">
+    <section className="relative py-28 px-6 md:px-12 bg-gradient-to-b from-black via-zinc-900 to-black text-white">
 
       {/* HEADER */}
-
       <div className="text-center max-w-3xl mx-auto mb-20">
 
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+           initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.5 }}
+  transition={{ duration: 0.8 }}
           className="text-4xl md:text-6xl font-bold"
         >
-          Why Choose <span className="text-text">Us</span>
+          Why Choose <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Us</span>
         </motion.h2>
 
         <p className="mt-4 text-lg text-white/70">
-          Premium development, modern design aur fast performance — sab ek jagah.
+          Premium development, modern design aur fast performance
         </p>
 
       </div>
 
       {/* GRID */}
-
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid gap-10 max-w-6xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-      >
+<motion.div
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="show"
+  viewport={{ once: true, amount: 0.3 }} // 🔥 scroll trigger
+  className="grid gap-10 max-w-6xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+>
         {whyChooseMeCards.map((card) => (
-          <motion.div key={card.id} variants={cardVariants}>
-            <Card card={card} />
-          </motion.div>
+          <Card key={card.id} card={card} />
         ))}
       </motion.div>
 

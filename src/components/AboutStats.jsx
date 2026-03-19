@@ -1,105 +1,121 @@
-
-import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { FaBriefcase, FaProjectDiagram, FaUsers, FaSmile } from "react-icons/fa";
 
 const stats = [
-  { title: "5+", desc: "Years Experience", value: 5 },
-  { title: "50+", desc: "Projects Completed", value: 50 },
-  { title: "10+", desc: "Expert Team Members", value: 10 },
-  { title: "100%", desc: "Client Satisfaction", value: 100 },
+  { title: "5+", desc: "Years Experience", value: 5, icon: FaBriefcase },
+  { title: "50+", desc: "Projects Completed", value: 50, icon: FaProjectDiagram },
+  { title: "10+", desc: "Expert Team Members", value: 10, icon: FaUsers },
+  { title: "100%", desc: "Client Satisfaction", value: 100, icon: FaSmile },
 ];
 
 export default function AboutStats() {
-  const controls = useAnimation();
-  const [counters, setCounters] = useState(stats.map(() => 0));
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  // ⚙️ Lightweight Counter Animation
-  const startCounters = () => {
-    const duration = 1000;
-    const steps = 60;
-    let frame = 0;
-    const interval = setInterval(() => {
-      frame++;
-      const progress = Math.min(frame / steps, 1);
-      setCounters(stats.map((stat) => Math.floor(stat.value * progress)));
-      if (progress === 1) clearInterval(interval);
-    }, duration / steps);
-  };
+  const [counters, setCounters] = useState(stats.map(() => 0));
 
   useEffect(() => {
-    controls.start((i) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.15, duration: 0.6, ease: "easeOut" },
-    }));
-  }, []);
+    if (!isInView) return;
+
+    const duration = 1200;
+    const start = performance.now();
+
+    const animate = (time) => {
+      const progress = Math.min((time - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setCounters(stats.map((stat) => Math.floor(stat.value * eased)));
+
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
+  }, [isInView]);
 
   return (
-    <motion.section
-      className="relative py-20 sm:py-24 bg-dark text-white overflow-hidden"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      onViewportEnter={() => {
-        if (!hasAnimated) {
-          startCounters();
-          setHasAnimated(true);
-        }
-      }}
+    <section
+      ref={ref}
+      className="relative py-28 bg-gradient-to-b from-black via-slate-900 to-black text-white overflow-hidden"
     >
-      {/* 🌌 Background Glow */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="hidden sm:block absolute top-20 left-20 w-72 h-72 bg-blue-600/20 rounded-full blur-2xl" />
-        <div className="hidden sm:block absolute bottom-10 right-16 w-96 h-96 bg-indigo-700/20 rounded-full blur-2xl" />
+      {/* Glow */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-20 left-20 w-80 h-80 bg-blue-600/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-16 w-[420px] h-[420px] bg-indigo-700/20 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-        {/* Title */}
+      <div className="max-w-7xl mx-auto px-6 text-center">
+
+        {/* Heading */}
         <motion.h2
-          className="text-4xl md:text-6xl font-semibold mb-14 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-700 drop-shadow-[0_3px_12px_rgba(0,0,0,0.4)]"
           initial={{ opacity: 0, y: 40 }}
-          animate={controls}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          className="text-5xl md:text-7xl font-bold mb-20 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent"
         >
           Our Impact in Numbers
         </motion.h2>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-6 md:gap-10">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              custom={i}
-              initial={{ opacity: 0, y: 50 }}
-              animate={controls}
-              transition={{ type: "spring", stiffness: 180, damping: 14 }}
-              className="group relative overflow-hidden bg-white/10 backdrop-blur-md sm:backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-10"
-            >
-              {/* Stat Number */}
-              <motion.h3
-                className="relative text-3xl max-sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
-              >
-                {counters[i]}
-                {stat.title.replace(/\d+/g, "")}
-              </motion.h3>
+        {/* Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 place-items-center">
 
-              {/* Description */}
-              <p className="mt-2 sm:mt-3 text-gray-300 text-sm sm:text-base md:text-lg tracking-wide">
-                {stat.desc}
-              </p>
+          {stats.map((stat, i) => {
+            const Icon = stat.icon;
 
-              {/* Glow Line */}
+            return (
               <motion.div
-                className="mt-4 mx-auto h-1 w-10 sm:w-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ duration: 0.6 }}
-                style={{ transformOrigin: "left" }}
-              />
-            </motion.div>
-          ))}
+                key={i}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                className="group relative flex flex-col items-center justify-center 
+                w-52 h-52 md:w-64 md:h-64 rounded-full 
+                bg-white/5 backdrop-blur-xl border border-white/10 
+                hover:border-blue-500/40 transition-all duration-300 
+                hover:scale-105"
+              >
+                {/* Icon */}
+                <div className="mb-3">
+                  <Icon className="text-3xl md:text-4xl text-blue-400" />
+                </div>
+
+                {/* Number */}
+                <h3 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+                  {counters[i]}
+                  {stat.title.replace(/\d+/g, "")}
+                </h3>
+
+                {/* Curved Text */}
+                <div className="absolute bottom-3 w-full flex justify-center">
+                  <svg width="180" height="70" viewBox="0 0 180 70">
+                    
+                    <path
+                      id={`curve-${i}`}
+                      d="M20,25 Q90,65 160,25"
+                      fill="transparent"
+                    />
+
+                    <text
+                      fill="#cbd5e1"
+                      fontSize="12"
+                      textAnchor="middle"
+                    >
+                      <textPath href={`#curve-${i}`} startOffset="50%">
+                        {stat.desc}
+                      </textPath>
+                    </text>
+
+                  </svg>
+                </div>
+
+                {/* Glow */}
+                <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 blur-xl transition duration-500" />
+              </motion.div>
+            );
+          })}
+
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

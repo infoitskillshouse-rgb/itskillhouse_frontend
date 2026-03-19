@@ -38,7 +38,7 @@ function CarresHeading() {
         <div className="Home_div flex items-center justify-start gap-3">
           <Link to='/'><FaHome className="lg:text-[3vw] max-sm:text-[8vw] hover:text-text" /></Link>
           <FaArrowRight />
-          <h1 className="text-[20px] font-medium ">Careers</h1>
+          <h1 className="text-[20px] font-medium ">Services</h1>
         </div>
         <h1 className="text-[3vw] leading-[7vw] lg:font-light  max-sm:font-light tracking-tight max-sm:text-[8vw] max-sm:leading-[12vw]">
           your  <span className="font-normal ">future </span> <span className="text-text text-[3.1vw] font-medium inline-block max-sm:text-[9vw] max-sm:font-light">

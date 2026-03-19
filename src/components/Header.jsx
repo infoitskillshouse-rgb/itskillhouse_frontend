@@ -112,7 +112,8 @@ const mobileMenuVariants = {
      <div className="flex items-center justify-between h-20 px-6 sm:px-8 md:px-12 relative z-50">
 
         <h3 className="text-white text-2xl font-montserrat font-semibold">
-          IT SKILLS
+          <Link to="/">IT SKILLS</Link>
+          
         </h3>
         <button
           className="text-2xl text-white z-50"

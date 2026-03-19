@@ -6,18 +6,35 @@ import CertifiedStudentsSlider from "./CertifiedStudentsSlider";
 import UpcomingBatches from "../batches/UpcomingBatches";
 import { FaUserGraduate } from "react-icons/fa";
 
-
 const StudentResult = () => {
   const [studentId, setStudentId] = useState("");
   const [student, setStudent] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const gridRef = useRef(null);
 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toISOString().split("T")[0];
   };
+
+  // ✅ SCROLL LOCK (FIXED)
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+    } else {
+      document.body.style.overflow = "auto";
+      document.body.style.position = "static";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.position = "static";
+    };
+  }, [showModal]);
 
   const fetchStudent = async () => {
     if (!studentId.trim()) {
@@ -27,11 +44,11 @@ const StudentResult = () => {
 
     setLoading(true);
     setError("");
-    setStudent(null);
 
     try {
       const res = await getStudentById(studentId);
       setStudent(res.data.student);
+      setShowModal(true);
     } catch (err) {
       setError("Student not found! Please check your ID.");
     }
@@ -39,7 +56,7 @@ const StudentResult = () => {
     setLoading(false);
   };
 
-  // Enable smooth scrolling
+  // smooth scroll
   useEffect(() => {
     if (gridRef.current) {
       gridRef.current.style.scrollBehavior = "smooth";
@@ -47,130 +64,157 @@ const StudentResult = () => {
   }, [student]);
 
   return (
-    <div className="">
-<div className="mx-auto  sm:p-10  bg-black text-white">
+    <>
+      {/* 🔹 Other Sections */}
+      <CoursesSection />
+      <WhyChooseUs />
+      <UpcomingBatches />
+      <CertifiedStudentsSlider />
 
-  {/* Header */}
-<h1 className="flex  items-center justify-center gap-3 pt-[50px] text-3xl sm:text-4xl font-semibold mb-8 bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+      {/* 🔹 Main Section */}
+      <div className="mx-auto sm:p-10 bg-gradient-to-br from-[#eaf4ff] via-[#f5f9ff] to-[#eaf4ff]">
 
-  <FaUserGraduate className="text-blue-400 text-4xl" />
+        {/* Header */}
+        <h1 className="flex items-center justify-center gap-3 pt-[40px] text-3xl sm:text-4xl font-bold mb-10 text-[#155DFC] text-center">
+          <FaUserGraduate className="text-[#155DFC] text-4xl" />
+          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Student Result Portal
+          </span>
+        </h1>
 
-  Student Result Portal
+        {/* Search Card */}
+        <div className="w-[95%] sm:w-[85%] md:w-[70%] mx-auto backdrop-blur-lg bg-white/70 border border-blue-100 rounded-3xl p-4 sm:p-5 shadow-lg">
 
-</h1>
+          <div className="flex flex-col sm:flex-row gap-3 items-center">
 
-  {/* Search */}
-<div className="w-[90%] mx-auto flex flex-col sm:flex-row gap-4 backdrop-blur-md bg-white/5 border border-white rounded-2xl p-3">
+            <input
+              type="text"
+              placeholder="Enter Student ID (e.g. 2026-DM-01)"
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
+              className="flex-1 w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+            />
 
-  <input
-    type="text"
-    placeholder="Enter Student ID (e.g. 2026-DM-01)"
-    value={studentId}
-    onChange={(e) => setStudentId(e.target.value)}
-    className="flex-1 p-3 bg-transparent text-white placeholder-gray-400 outline-none 
-    border-b border-white sm:border-none"
-  />
+            <button
+              onClick={fetchStudent}
+              className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold active:scale-95 transition"
+            >
+              {loading ? "Searching..." : "Search"}
+            </button>
 
-  <button
-    onClick={fetchStudent}
-    className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold shadow-lg hover:scale-105 transition"
-  >
-    {loading ? "Searching..." : "Search"}
-  </button>
-
-</div>
-
-  {/* Error */}
-  {error && (
-    <p className="text-red-400 mt-5 text-center font-medium">{error}</p>
-  )}
-
-  {/* Student Details */}
-  {student && (
-    <div className="mt-10 flex flex-col gap-8">
-
-      {/* Profile */}
-      <div className="flex flex-col md:flex-row gap-8 items-center md:items-start p-6 rounded-3xl backdrop-blur-md bg-white/5 border border-white/10 text-center md:text-left">
-
-        <img
-          src={student.image}
-          alt={student.name}
-          className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-blue-500 shadow-xl"
-        />
-
-        <div className="flex-1">
-          <h2 className="text-2xl font-bold mb-2">{student.name}</h2>
-
-          <div className="mb-3">
-            <span className="px-4 py-1 text-sm font-semibold rounded-full bg-blue-500/20 text-blue-300">
-              {student.courseName}
-            </span>
           </div>
 
-          <div className="mb-2">
-            <span className="px-3 py-1 text-sm rounded-lg bg-white/10 text-gray-300">
-              ID: {student.studentId}
-            </span>
-          </div>
+          <p className="text-xs text-gray-500 mt-3 text-center sm:text-left">
+            👉 Enter your unique Student ID to view your result instantly
+          </p>
 
-          <div>
-            <span className="px-3 py-1 text-sm rounded-lg bg-indigo-500/20 text-indigo-300">
-              Admission: {formatDate(student.dateOfAdmission)}
-            </span>
-          </div>
         </div>
+
+        {/* Error */}
+        {error && (
+          <p className="text-red-500 mt-6 text-center font-medium animate-pulse">
+            {error}
+          </p>
+        )}
       </div>
 
-      {/* Student Details Grid */}
-      <div className="flex flex-col gap-4">
+      {/* 🔥 MODAL */}
+      {showModal && student && (
+        <div
+          className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
+          onClick={() => setShowModal(false)} // ✅ click outside close
+        >
 
-        <h3 className="text-2xl font-semibold text-white text-center md:text-left mb-4">
-          Student Details
-        </h3>
+          <div
+            className="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-6 relative"
+            onClick={(e) => e.stopPropagation()} // ❗ prevent close
+          >
 
-<div
-  ref={gridRef}
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2 pr-2"
->
-
-          {[
-            ["Father Name", student.fatherName],
-            ["Mother Name", student.motherName],
-            ["Course Duration", `${student.courseDuration} ${student.durationType}`],
-            ["Total Marks", student.totalMarks],
-            ["Obtained Marks", student.obtainedMarks],
-            ["Percentage", student.percentage + "%"],
-            ["Grade", student.grade],
-            ["Result", student.result],
-            ["Date of Admission", formatDate(student.dateOfAdmission)],
-          ].map(([label, value], i) => (
-
-            <div
-              key={i}
-              className="bg-white/5 border border-white/10 rounded-2xl p-5 shadow-lg hover:bg-white/10 transition text-center md:text-left"
+            {/* Close */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-3 right-4 text-gray-500 hover:text-red-500 text-xl"
             >
-              <p className="text-sm uppercase tracking-wide text-gray-400 font-semibold">
-                {label}
-              </p>
+              ✕
+            </button>
 
-              <h4 className="text-lg font-semibold text-yellow-400 mt-1">
-                {value}
-              </h4>
+            {/* Profile */}
+            <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-start">
+
+              <img
+                src={student.image}
+                alt={student.name}
+                className="w-28 h-28 object-cover rounded-full border-4 border-blue-500"
+              />
+
+              <div>
+                <h2 className="text-xl font-bold text-gray-800">
+                  {student.name}
+                </h2>
+
+                <p className="text-sm text-gray-500">
+                  ID: {student.studentId}
+                </p>
+
+                <span className="inline-block mt-2 px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">
+                  {student.courseName}
+                </span>
+              </div>
             </div>
 
-          ))}
+            {/* Details */}
+            <div className="grid grid-cols-2 gap-4 mt-6">
 
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <p className="text-xs text-gray-500">Father</p>
+                <p className="font-semibold text-gray-700">{student.fatherName}</p>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <p className="text-xs text-gray-500">Mother</p>
+                <p className="font-semibold text-gray-700">{student.motherName}</p>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <p className="text-xs text-gray-500">Marks</p>
+                <p className="font-semibold text-gray-700">
+                  {student.obtainedMarks}/{student.totalMarks}
+                </p>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <p className="text-xs text-gray-500">Percentage</p>
+                <p className="font-semibold text-blue-600">
+                  {student.percentage}%
+                </p>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg col-span-2">
+                <p className="text-xs text-gray-500">Result</p>
+                <p
+                  className={`font-semibold ${
+                    student.result === "pass"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {student.result}
+                </p>
+              </div>
+
+              <div className="bg-blue-50 p-3 rounded-lg col-span-2">
+                <p className="text-xs text-gray-500">Admission Date</p>
+                <p className="font-semibold text-gray-700">
+                  {formatDate(student.dateOfAdmission)}
+                </p>
+              </div>
+
+            </div>
+
+          </div>
         </div>
-      </div>
-    </div>
-  )}
-</div>
-    <CoursesSection />
-    <WhyChooseUs />
-    <CertifiedStudentsSlider />
-    <UpcomingBatches/>
-    </div>
-    
+      )}
+    </>
   );
 };
 

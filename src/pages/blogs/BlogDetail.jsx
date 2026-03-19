@@ -46,7 +46,7 @@ const BlogDetail = () => {
       <div className="relative">
 
         <img
-          src={`${import.meta.env.VITE_IMAGE_BASE_URL}/blogs/${blog.image}`}
+          src={blog.image}
           className="w-full h-[420px] object-cover"
         />
 

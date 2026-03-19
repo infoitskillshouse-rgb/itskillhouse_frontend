@@ -32,38 +32,36 @@ function ButWhy() {
   const textOpacity = useTransform(scrollYProgress, [1, 0.3], [1, 1]);
   const textY = useTransform(scrollYProgress, [0.15, 0.3], [40, 0]);
 
-  const cardsData = [
-    {
-      icon: <Timer className="w-12 h-12 stroke-[1.5]" />,
-      title: '5+',
-      subtitle: 'Years of Creative Hustle',
-      pos: 'top-[5%] left-[4vw]',
-      bg: 'bg-text',
-      color: 'text-white',
-    },
-    {
-      icon: <Globe className="w-12 h-12 stroke-[1.5]" />,
-      title: '20+',
-      subtitle: 'Brands Empowered',
-      pos: 'top-[5%] right-[4vw]',
-      bg: 'bg-[#dcf0ff]',
-    },
-    {
-      icon: <Zap className="w-12 h-12 stroke-[1.5]" />,
-      title: '75+',
-      subtitle: 'Digital Projects',
-      pos: 'bottom-[5%] left-[4vw]',
-      bg: 'bg-[#f5f5f5]',
-    },
-    {
-      icon: <Rocket className="w-12 h-12 stroke-[1.5]" />,
-      title: '8',
-      subtitle: 'Passionate Creators',
-      pos: 'bottom-[5%] right-[4vw]',
-      bg: 'bg-text',
-      color: 'text-white',
-    },
-  ];
+const cardsData = [
+  {
+    title: "5+",
+    subtitle: "Years of Creative Hustle",
+    pos: "top-[5%] left-[4vw]",
+    image: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1400",
+    icon: Timer,
+  },
+  {
+    title: "20+",
+    subtitle: "Brands Empowered",
+    pos: "top-[5%] right-[4vw]",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1400",
+    icon: Globe,
+  },
+  {
+    title: "75+",
+    subtitle: "Digital Projects",
+    pos: "bottom-[5%] left-[4vw]",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1400",
+    icon: Rocket,
+  },
+  {
+    title: "8",
+    subtitle: "Passionate Creators",
+    pos: "bottom-[5%] right-[4vw]",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400",
+    icon: Zap,
+  },
+];
 
   const [hasAnimated, setHasAnimated] = useState(
     Array(cardsData.length).fill(false)
@@ -106,27 +104,31 @@ function ButWhy() {
             const isInView = useInView(ref, { once: true });
 
             return (
-              <motion.div
-                key={i}
-                ref={ref}
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{
-                  type: 'spring',
-                  stiffness: 90,
-                  damping: 18,
-                  mass: 1,
-                  delay: i * 0.12,
-                }}
-                whileHover={{ scale: 1.03 }}
-                className={`w-full max-w-[350px] md:max-w-[500px]  ${card.bg} ${
-                  card.color || 'text-black'
-                } rounded-3xl shadow-xl p-6`}
-              >
-                <div className="mb-4">{card.icon}</div>
-                <h3 className="text-3xl ">{card.title}</h3>
-                <p className="mt-2">{card.subtitle}</p>
-              </motion.div>
+<motion.div
+  key={i}
+  ref={ref}
+  initial={{ opacity: 0, y: 40 }}
+  animate={isInView ? { opacity: 1, y: 0 } : {}}
+  transition={{ delay: i * 0.12 }}
+  className="relative w-full max-w-[350px] rounded-3xl overflow-hidden shadow-xl group"
+>
+  <img src={card.image} className="absolute inset-0 w-full h-full object-cover" />
+
+  <div className="absolute inset-0 bg-black/60" />
+
+  {/* ICON */}
+<div className="absolute top-4 right-4 w-14 h-14 rounded-full 
+  bg-black/40 backdrop-blur-md 
+  flex items-center justify-center"
+>
+  <card.icon className="w-7 h-7 text-white" />
+</div>
+
+  <div className="relative z-10 p-6 text-white">
+    <h3 className="text-3xl font-bold">{card.title}</h3>
+    <p className="mt-2">{card.subtitle}</p>
+  </div>
+</motion.div>
             );
           })}
         </div>
@@ -168,18 +170,53 @@ function ButWhy() {
 
           return (
             <MagneticItem key={i}>
-              <motion.article
-                style={finalStyle}
-                className={`absolute ${card.pos} ${card.bg} ${
-                  card.color || 'text-black'
-                } rounded-3xl shadow-xl p-6 w-[290px]`}
-              >
-                <div className="mb-4">{card.icon}</div>
-                <h3 className="text-[clamp(2.5rem,5vw,4.5rem)] font-black">
-                  {card.title}
-                </h3>
-                <p className="mt-2 opacity-90">{card.subtitle}</p>
-              </motion.article>
+<motion.article
+  style={finalStyle}
+  className={`absolute ${card.pos} w-[300px] rounded-3xl overflow-hidden shadow-[0_10px_60px_rgba(0,0,0,0.4)] group`}
+>
+  {/* IMAGE */}
+  <img
+    src={card.image}
+    alt=""
+    className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-110 transition duration-700"
+  />
+
+  {/* 🔥 EXTRA DARK OVERLAY */}
+  <div className="absolute inset-0 bg-gradient-to-b 
+    from-black/40 
+    via-black/65 
+    to-black/75" 
+  />
+
+  {/* 🔥 SVG ICON (TOP RIGHT) */}
+  <div className="absolute top-4 right-4 w-16 h-16 rounded-xl 
+    bg-black/50 backdrop-blur-lg border border-white/10 
+    flex items-center justify-center shadow-lg"
+  >
+    <card.icon className="w-10 h-10 text-white opacity-90" />
+  </div>
+
+  {/* CONTENT */}
+  <div className="relative z-10 p-6 text-white flex flex-col justify-end h-full">
+    
+    <h3 className="text-[clamp(2.5rem,5vw,4.5rem)] font-black leading-none tracking-tight">
+      {card.title}
+    </h3>
+
+    <p className="mt-2 text-sm opacity-80 tracking-wide">
+      {card.subtitle}
+    </p>
+  </div>
+
+  {/* 🔥 PREMIUM HOVER GLOW */}
+  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500">
+    <div className="w-full h-full bg-gradient-to-r 
+      from-transparent via-white/5 to-transparent 
+      translate-x-[-100%] group-hover:translate-x-[100%] 
+      transition duration-1000" 
+    />
+  </div>
+</motion.article>
             </MagneticItem>
           );
         })}

@@ -1,4 +1,4 @@
- import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 
 // ✅ Get all portfolios (Public)
 export const getPortfolios = async () => {
@@ -14,13 +14,21 @@ export const getPortfolioById = async (id) => {
 
 // ✅ Create portfolio (Admin only)
 export const createPortfolio = async (portfolioData) => {
-  const res = await axiosInstance.post('/portfolios', portfolioData);
+  const res = await axiosInstance.post('/portfolios/create', portfolioData, {
+    headers: {
+      "Content-Type": "multipart/form-data", // 🔥 IMPORTANT
+    },
+  });
   return res.data;
 };
 
 // ✅ Update portfolio (Admin only)
 export const updatePortfolio = async (id, portfolioData) => {
-  const res = await axiosInstance.put(`/portfolios/${id}`, portfolioData);
+  const res = await axiosInstance.put(`/portfolios/${id}`, portfolioData, {
+    headers: {
+      "Content-Type": "multipart/form-data", // 🔥 IMPORTANT
+    },
+  });
   return res.data;
 };
 

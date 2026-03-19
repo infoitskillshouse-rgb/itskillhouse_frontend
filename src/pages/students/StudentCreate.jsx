@@ -256,21 +256,27 @@ export default function AdminCreate() {
     className="w-full p-2 border rounded bg-white"
   >
     <option value="">Select Course</option>
+<option value="Basic Computer">Basic Computer</option>
+<option value="Basic Computer & Typing">Basic Computer & Typing</option>
 
-    <option value="Basic Computer">Basic Computer</option>
-    <option value="Website Development">Website Development</option>
-    <option value="Website Designing">Website Designing</option>
-    <option value="Full Stack Development">Full Stack Development</option>
-    <option value="WordPress">WordPress</option>
-    <option value="Digital Marketing">Digital Marketing </option>
-    <option value="Java Training">Java Training</option>
-    <option value="Python Training">Python Training</option>
-    <option value="Php">Php</option>
-     <option value="Tally ">Tally  </option>
-    <option value="Tally (GST + Return)">Tally (GST + Return)</option>
-    <option value="Tally Prime ">Tally Prime (GST + Return)</option>
-    <option value="Punjabi Typing">Punjabi Typing</option>
-    <option value="Hindi Typing">Hindi Typing</option>
+<option value="Website Development">Website Development</option>
+<option value="Website Designing">Website Designing</option>
+<option value="Full Stack Development">Full Stack Development</option>
+
+<option value="WordPress">WordPress</option>
+<option value="Digital Marketing">Digital Marketing</option>
+
+<option value="Java Training">Java Training</option>
+<option value="Python Training">Python Training</option>
+<option value="Php">Php</option>
+
+<option value="Tally">Tally</option>
+<option value="Tally (GST + Return)">Tally (GST + Return)</option>
+<option value="Tally Prime">Tally Prime</option>
+
+<option value="Punjabi Typing">Punjabi Typing</option>
+<option value="Hindi Typing">Hindi Typing</option>
+<option value="Javascript">Javascript</option>
 
   </select>
 </div>
@@ -325,13 +331,20 @@ export default function AdminCreate() {
 
           {/* Submit Button */}
           <div className="md:col-span-2">
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition"
-            >
-              {loading ? "Creating..." : "Create Student"}
-            </button>
+          <button
+  type="submit"
+  disabled={loading}
+  className="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition flex items-center justify-center gap-2"
+>
+  {loading ? (
+    <>
+      <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+      Creating...
+    </>
+  ) : (
+    "Create Student"
+  )}
+</button>
           </div>
         </form>
       </div>

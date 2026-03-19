@@ -19,6 +19,7 @@ const AllBlogs = () => {
   const [confirmAction, setConfirmAction] = useState(null);
   const [confirmMessage, setConfirmMessage] = useState('');
   const [confirmTitle, setConfirmTitle] = useState('');
+  
 
   const fetchBlogs = async () => {
     setLoading(true);
@@ -35,6 +36,7 @@ const AllBlogs = () => {
 
   useEffect(() => {
     fetchBlogs();
+    
   }, []);
 
   const handleDelete = (id) => {
@@ -200,7 +202,7 @@ const AllBlogs = () => {
                     <td className="p-4">
                       {blog.image ? (
                         <img
-                          src={`${import.meta.env.VITE_IMAGE_BASE_URL}/blogs/${blog.image}`}
+                          src={blog.image}
                           alt={blog.title}
                           className="w-16 h-16 object-contain rounded"
                         />

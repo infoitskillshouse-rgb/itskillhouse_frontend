@@ -18,6 +18,7 @@ import TopLine from "./components/TopLine";
 import BlobTransition from "./components/BlobTransition";
 import Preloader from "./components/Preloader";
 import NewsletterPopup from "./pages/newsLetter/NewsletterPopup";
+import NotFound from "./components/NotFound.jsx";
 
 // Toastify
 import { ToastContainer } from "react-toastify";
@@ -186,7 +187,7 @@ const Layout = () => {
             </Route>
 
             {/* 404 */}
-            <Route path="*" element={<h1>404 - Not Found</h1>} />
+            <Route path="*" element={<NotFound/>} />
           </Routes>
         </motion.div>
       </AnimatePresence>

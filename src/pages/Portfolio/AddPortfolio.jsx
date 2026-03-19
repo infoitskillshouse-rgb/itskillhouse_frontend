@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPortfolio } from "../../services/portfolioService";
@@ -9,8 +8,10 @@ export default function AddPortfolio() {
   const [formData, setFormData] = useState({
     title: "",
     category: "",
-    image: "",
   });
+
+  const [image, setImage] = useState(null); // 👈 file store
+  const [preview, setPreview] = useState(""); // 👈 preview
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,18 +24,35 @@ export default function AddPortfolio() {
     });
   };
 
+  // Handle file change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!formData.title || !formData.category || !formData.image) {
+    if (!formData.title || !formData.category || !image) {
       return setError("All fields are required");
     }
 
     try {
       setLoading(true);
-      await createPortfolio(formData);
+
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("category", formData.category);
+      data.append("image", image); // 👈 file send
+
+      await createPortfolio(data);
+
       navigate("/admin/portfolio"); // redirect to list
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
@@ -86,25 +104,23 @@ export default function AddPortfolio() {
           />
         </div>
 
-        {/* Image URL */}
+        {/* Image File */}
         <div>
           <label className="block mb-1 font-medium text-gray-700">
-            Image URL
+            Upload Image
           </label>
           <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            placeholder="https://example.com/image.jpg"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full border border-gray-300 rounded-lg px-4 py-2"
           />
         </div>
 
         {/* Preview */}
-        {formData.image && (
+        {preview && (
           <img
-            src={formData.image}
+            src={preview}
             alt="Preview"
             className="w-full h-48 object-cover rounded-lg border"
           />

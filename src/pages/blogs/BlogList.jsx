@@ -67,7 +67,7 @@ const BlogList = () => {
                 className="bg-white rounded-xl shadow-md hover:shadow-xl transition"
               >
                 <img
-                  src={`${import.meta.env.VITE_IMAGE_BASE_URL}/blogs/${blog.image}`}
+                  src={blog.image}
                   alt={blog.title}
                   className="w-full h-48 object-cover rounded-t-xl"
                 />
