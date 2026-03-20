@@ -19,7 +19,7 @@ const AddBlog = () => {
       content: '',
       image: null,
       category: '',
-      status: 'draft',
+      status: 'publish',
       tags: '',
       metaTitle: '',
       metaDescription: '',
@@ -88,7 +88,7 @@ const AddBlog = () => {
 
     try {
       setLoading(true);
-      await axios.post('/blogs', formData, {
+      await axios.post('/blogs/create', formData, {
         headers: {
           Authorization: `Bearer ${getToken().token}`,
           'Content-Type': 'multipart/form-data',

@@ -1,18 +1,28 @@
-  // src/services/blogApi.js
-  import api from "./api";
-  import axiosInstance from "../../utils/axiosInstance";
+// src/services/blogApi.js
+import axiosInstance from "../../utils/axiosInstance";
 
-  export const getAllBlogs = () => api.get("/blogs");
-  export const getBlogBySlug = (slug) => api.get(`/api/blogs/${slug}`);
-  export const createBlog = (data) => api.post("/api/blogs", data);
-  export const updateBlog = (id, data) => api.put(`/api/blogs/${id}`, data);
-  export const deleteBlog = async (blogId, imagePath) => {
-    try {
-      const res = await axiosInstance.delete(`/blogs/${blogId}`);
-      alert("Deleted successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Delete failed");
-    }
-  };
+// GET all blogs
+export const getAllBlogs = () => axiosInstance.get("/blogs");
 
+// GET single blog by slug
+export const getBlogBySlug = (slug) =>
+  axiosInstance.get(`/blogs/${slug}`);
+
+// CREATE blog
+export const createBlog = (data) =>
+  axiosInstance.post("/blogs/create", data);
+
+// UPDATE blog
+export const updateBlog = (id, data) =>
+  axiosInstance.put(`/blogs/${id}`, data);
+
+// DELETE blog
+export const deleteBlog = async (blogId) => {
+  try {
+    const res = await axiosInstance.delete(`/blogs/${blogId}`);
+    return res.data; // better return instead of alert
+  } catch (err) {
+    console.error(err);
+    throw err; // error ko upar handle karne do
+  }
+};
