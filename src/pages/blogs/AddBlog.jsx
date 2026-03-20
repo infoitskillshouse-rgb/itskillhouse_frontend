@@ -88,12 +88,11 @@ const AddBlog = () => {
 
     try {
       setLoading(true);
-      await axios.post('/blogs/create', formData, {
-        headers: {
-          Authorization: `Bearer ${getToken().token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+await axios.post('/blogs/create', formData, {
+  headers: {
+    Authorization: `Bearer ${getToken().token}`,
+  },
+});
       toast.success('✅ Blog added successfully');
      
       reset();

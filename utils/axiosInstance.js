@@ -6,13 +6,9 @@ import axios from "axios";
 
 const instance = axios.create({
 
-baseURL: import.meta.env.VITE_API_URL || "https://itskillhouse-backend.onrender.com/api",
+baseURL: import.meta.env.VITE_API_BASE_URL,
 
-headers: {
-"Content-Type":"application/json"
-},
-
-withCredentials:true // cookie auth support
+withCredentials:true 
 
 });
 
