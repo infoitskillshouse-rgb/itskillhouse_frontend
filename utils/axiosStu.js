@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://itskillhouse-backend.onrender.com/api", // ✅ Correct backend port
+  baseURL: import.meta.env.VITE_API_BASE_URL, 
 });
 
 // axiosInstance.js

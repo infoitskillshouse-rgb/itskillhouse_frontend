@@ -5,6 +5,7 @@ import WhyChooseUs from "./WhyChooseUs";
 import CertifiedStudentsSlider from "./CertifiedStudentsSlider";
 import UpcomingBatches from "../batches/UpcomingBatches";
 import { FaUserGraduate } from "react-icons/fa";
+import StudentHero from "../../components/StudentHero";
 
 const StudentResult = () => {
   const [studentId, setStudentId] = useState("");
@@ -66,16 +67,17 @@ const StudentResult = () => {
   return (
     <>
       {/* 🔹 Other Sections */}
+      <StudentHero/>
       <CoursesSection />
       <WhyChooseUs />
       <UpcomingBatches />
       <CertifiedStudentsSlider />
 
       {/* 🔹 Main Section */}
-      <div className="mx-auto sm:p-10 bg-gradient-to-br from-[#eaf4ff] via-[#f5f9ff] to-[#eaf4ff]">
+      <div className="mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-14 md:py-20 bg-gradient-to-br from-[#eaf4ff] via-[#f5f9ff] to-[#eaf4ff]">
 
         {/* Header */}
-        <h1 className="flex items-center justify-center gap-3 pt-[40px] text-3xl sm:text-4xl font-bold mb-10 text-[#155DFC] text-center">
+        <h1 className="flex items-center justify-center gap-3 pt-6 sm:pt-10 md:pt-12 text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-10 md:mb-12 text-[#155DFC] text-center">
           <FaUserGraduate className="text-[#155DFC] text-4xl" />
           <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Student Result Portal
@@ -83,27 +85,26 @@ const StudentResult = () => {
         </h1>
 
         {/* Search Card */}
-        <div className="w-[95%] sm:w-[85%] md:w-[70%] mx-auto backdrop-blur-lg bg-white/70 border border-blue-100 rounded-3xl p-4 sm:p-5 shadow-lg">
+       <div className="w-full sm:w-[85%] md:w-[70%] mx-auto backdrop-blur-lg bg-white/70 border border-blue-100 rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg">
 
-          <div className="flex flex-col sm:flex-row gap-3 items-center">
+ <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
 
-            <input
-              type="text"
-              placeholder="Enter Student ID (e.g. 2026-DM-01)"
-              value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
-              className="flex-1 w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
-            />
+  <input
+    type="text"
+    placeholder="Enter Student ID (e.g. 2026-DM-01)"
+    value={studentId}
+    onChange={(e) => setStudentId(e.target.value)}
+    className="flex-1 w-full px-4 py-3 sm:py-3.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none"
+  />
 
-            <button
-              onClick={fetchStudent}
-              className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold active:scale-95 transition"
-            >
-              {loading ? "Searching..." : "Search"}
-            </button>
+  <button
+    onClick={fetchStudent}
+    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold active:scale-95 transition"
+  >
+    {loading ? "Searching..." : "Search"}
+  </button>
 
-          </div>
-
+</div>
           <p className="text-xs text-gray-500 mt-3 text-center sm:text-left">
             👉 Enter your unique Student ID to view your result instantly
           </p>

@@ -3,7 +3,9 @@ import axiosInstance from "../../utils/axiosInstance";
 // ✅ Get all portfolios (Public)
 export const getPortfolios = async () => {
   const res = await axiosInstance.get('/portfolios');
+
   return res.data;
+  
 };
 
 // ✅ Get single portfolio by ID (Public)

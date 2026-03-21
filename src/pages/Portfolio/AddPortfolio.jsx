@@ -8,6 +8,7 @@ export default function AddPortfolio() {
   const [formData, setFormData] = useState({
     title: "",
     category: "",
+    image:"",
   });
 
   const [image, setImage] = useState(null); // 👈 file store
