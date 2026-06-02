@@ -149,7 +149,7 @@ const StudentResult = () => {
               />
 
               <div>
-                <h2 className="text-xl font-bold text-gray-800 uppercase">
+                <h2 className="text-xl font-bold text-gray-800 uppercase ">
                   {student.name}
                 </h2>
 
