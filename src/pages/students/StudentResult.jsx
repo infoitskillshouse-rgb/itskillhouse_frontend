@@ -149,7 +149,7 @@ const StudentResult = () => {
               />
 
               <div>
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold text-gray-800 uppercase">
                   {student.name}
                 </h2>
 
@@ -168,12 +168,12 @@ const StudentResult = () => {
 
               <div className="bg-blue-50 p-3 rounded-lg">
                 <p className="text-xs text-gray-500">Father</p>
-                <p className="font-semibold text-gray-700">{student.fatherName}</p>
+                <p className="font-semibold text-gray-700 uppercase">{student.fatherName}</p>
               </div>
 
               <div className="bg-blue-50 p-3 rounded-lg">
                 <p className="text-xs text-gray-500">Mother</p>
-                <p className="font-semibold text-gray-700">{student.motherName}</p>
+                <p className="font-semibold text-gray-700 uppercase">{student.motherName}</p>
               </div>
 
               <div className="bg-blue-50 p-3 rounded-lg">
@@ -193,7 +193,7 @@ const StudentResult = () => {
               <div className="bg-blue-50 p-3 rounded-lg col-span-2">
                 <p className="text-xs text-gray-500">Result</p>
                 <p
-                  className={`font-semibold ${
+                  className={`font-semibold uppercase ${
                     student.result === "pass"
                       ? "text-green-600"
                       : "text-red-600"
