@@ -147,7 +147,7 @@ const PricingPlans = React.memo(() => {
     whileTap={{ scale: 0.95 }}
     onClick={() =>
       window.open(
-        `https://wa.me/919592838557?text=Hi%20Vikas!%20I'm%20interested%20in%20your%20${encodeURIComponent(
+        `https://wa.me/919592838557?text=Hi% %20I'm%20interested%20in%20your%20${encodeURIComponent(
           plan.name
         )}%20package.`,
         "_blank"
